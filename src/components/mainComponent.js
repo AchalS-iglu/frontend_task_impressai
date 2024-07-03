@@ -75,43 +75,44 @@ function MainComponent(props) {
             dataIndex: "name",
             key: "name",
             editable: true,
-            width: "39%",
+            width: "35%",
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
             editable: true,
-            width: "39%",
+            width: "35%",
         },
         {
             title: "operation",
             dataIndex: "operation",
+            window: "15%",
             render: (_, record) => {
                 const editable = isEditing(record);
                 return editable ? (
                     <span className="table-actions-col">
-                        <Button type="link" htmlType="submit">
+                        <Button htmlType="submit" type="primary">
                             Save
                         </Button>
                         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                            <a>Cancel</a>
+                            <Button>Cancel</Button>
                         </Popconfirm>
                     </span>
                 ) : (
                     <span className="table-actions-col">
-                        <Typography.Link
+                        <Button
                             disabled={editingKey !== ""}
                             onClick={() => {
                                 formDispatch({ type: "CLEAR" });
                                 setEditingKey(record.id);
                             }}>
                             Edit
-                        </Typography.Link>
+                        </Button>
                         <Popconfirm
                             title="Sure you want to delete?"
                             onConfirm={() => deleteUser(record.id)}>
-                            <a>Delete</a>
+                            <Button type="danger">Delete</Button>
                         </Popconfirm>
                     </span>
                 );
