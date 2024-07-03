@@ -8,24 +8,19 @@ export const EditableCell = ({
     record,
     index,
     children,
+    inputOnChange,
+    inputValue,
     ...restProps
 }) => {
     return (
         <td {...restProps}>
             {editing ? (
-                <Form.Item
+                <Input
                     name={dataIndex}
-                    style={{
-                        margin: 0,
-                    }}
-                    rules={[
-                        {
-                            required: true,
-                            message: `Please Input ${title}!`,
-                        },
-                    ]}>
-                    <Input />
-                </Form.Item>
+                    value={inputValue}
+                    onChange={inputOnChange}
+                    placeholder={`Enter ${title}`}
+                />
             ) : (
                 children
             )}

@@ -1,32 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import InputHandler from "./commonInput";
 import { Button, Form, Popconfirm, Table, Typography } from "antd";
 import { EditableCell } from "./editableCell";
+import { toast } from "sonner";
+import { validateRecord } from "../lib/commonFunctions";
+
+function formReducer(state, action) {
+    switch (action.type) {
+        case "CLEAR": {
+            return {
+                ...state,
+                name: "",
+                email: "",
+            };
+        }
+        case "SET": {
+            return {
+                ...state,
+                name: action.payload.name ?? state.name,
+                email: action.payload.email ?? state.email,
+            };
+        }
+        default:
+            return state;
+    }
+}
 
 function MainComponent(props) {
     const { getUsers, userState, addUser, deleteUser, editUser } = props;
 
-    const [form] = Form.useForm();
+    const [formState, formDispatch] = useReducer(formReducer, {
+        name: "",
+        email: "",
+    });
     const [editingKey, setEditingKey] = useState("");
     const isEditing = (record) => record.id === editingKey;
-    const edit = (record) => {
-        form.setFieldsValue({
-            name: "",
-            email: "",
-            ...record,
-        });
-        setEditingKey(record.id);
-    };
+    const edit = (record) => {};
 
     const cancel = () => {
         setEditingKey("");
     };
 
-    const save = async (key) => {
+    console.log(editingKey);
+
+    const save = async (e) => {
+        e.preventDefault();
         try {
-            const row = await form.validateFields();
-            editUser(key, row);
-            setEditingKey("");
+            if (validateRecord(formState)) {
+                const row = {
+                    name: formState.name,
+                    email: formState.email,
+                };
+                await editUser(editingKey, row);
+                setEditingKey("");
+            }
         } catch (errInfo) {
             console.log("Validate Failed:", errInfo);
         }
@@ -64,9 +91,9 @@ function MainComponent(props) {
                 const editable = isEditing(record);
                 return editable ? (
                     <span className="table-actions-col">
-                        <Typography.Link onClick={() => save(record.id)}>
+                        <Button type="link" htmlType="submit">
                             Save
-                        </Typography.Link>
+                        </Button>
                         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
                             <a>Cancel</a>
                         </Popconfirm>
@@ -75,7 +102,10 @@ function MainComponent(props) {
                     <span className="table-actions-col">
                         <Typography.Link
                             disabled={editingKey !== ""}
-                            onClick={() => edit(record)}>
+                            onClick={() => {
+                                formDispatch({ type: "CLEAR" });
+                                setEditingKey(record.id);
+                            }}>
                             Edit
                         </Typography.Link>
                         <Popconfirm
@@ -100,6 +130,13 @@ function MainComponent(props) {
                 dataIndex: col.dataIndex,
                 title: col.title,
                 editing: isEditing(record),
+                inputOnChange: (e) => {
+                    formDispatch({
+                        type: "SET",
+                        payload: { [col.dataIndex]: e.target.value },
+                    });
+                },
+                inputValue: formState[col.dataIndex],
             }),
         };
     });
@@ -108,7 +145,7 @@ function MainComponent(props) {
         <div id="main-container-wrapper" className="main-container-wrapper">
             <h1 className="main-heading">Impress.AI Assignment</h1>
             <InputHandler onSubmit={addUser} />
-            <Form form={form} component={false}>
+            <form component={false} onSubmit={save}>
                 <Table
                     components={{
                         body: {
@@ -126,7 +163,7 @@ function MainComponent(props) {
                     }}
                     size="middle"
                 />
-            </Form>
+            </form>
         </div>
     );
 }
