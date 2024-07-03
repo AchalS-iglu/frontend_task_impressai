@@ -35,13 +35,8 @@ function MainComponent(props) {
     });
     const [editingKey, setEditingKey] = useState("");
     const isEditing = (record) => record.id === editingKey;
-    const edit = (record) => {};
 
-    const cancel = () => {
-        setEditingKey("");
-    };
-
-    console.log(editingKey);
+    const cancel = () => {};
 
     const save = async (e) => {
         e.preventDefault();

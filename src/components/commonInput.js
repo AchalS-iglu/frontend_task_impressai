@@ -8,7 +8,7 @@ const InputHandler = ({ onSubmit, editMode = false }) => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = (e) => {
-        if (validateRecord) {
+        if (validateRecord({ name, email })) {
             setEmail("");
             setName("");
             onSubmit({ name, email });
