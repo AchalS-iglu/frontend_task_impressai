@@ -37,6 +37,7 @@ const InputHandler = ({ onSubmit, editMode = false }) => {
                 <Input
                     type="text"
                     placeholder="Name"
+                    value={name}
                     onChange={(e) => {
                         setName(e.target.value);
                     }}
@@ -44,6 +45,7 @@ const InputHandler = ({ onSubmit, editMode = false }) => {
                 <Input
                     type="text"
                     placeholder="Email"
+                    value={email}
                     onChange={(e) => {
                         setEmail(e.target.value);
                     }}
