@@ -33,11 +33,14 @@
 }
 
 .table-wrapper {
-    min-width: 36rem;
+    min-width: 42rem;
 }
 
 .table-actions-col {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.editable-cell-value-wrap {
 }

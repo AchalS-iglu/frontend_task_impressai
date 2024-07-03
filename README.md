@@ -56,18 +56,18 @@
 ### Level 3
 
 -   Add delete functionality:
-    -   [ ] Delete for Each User: Implement a delete feature for each user entry
+    -   [x] Delete for Each User: Implement a delete feature for each user entry
 
 ![image](https://github.com/impressai/frontend_task/assets/28563570/c3da4f55-6e89-47cc-bbde-35e3c20f80f6)
 
 ### Level 4
 
 -   Add edit functionality:
-    -   [ ] Edit for Each User: Implement a edit feature for each user entry
+    -   [x] Edit for Each User: Implement a edit feature for each user entry
 
 ![image](https://github.com/impressai/frontend_task/assets/28563570/67fd80fc-c022-41b3-8f01-de11de046379)
 
 ### Bonus level
 
--   [ ] Maintain separate reducer - create and manage a separate reducer for storing the details of the currently edited user.
--   [ ] Add Confirmation for Deletion - implement a confirmation dialog that asks for user approval before deleting a user entry.
+-   [] Maintain separate reducer - create and manage a separate reducer for storing the details of the currently edited user.
+-   [x] Add Confirmation for Deletion - implement a confirmation dialog that asks for user approval before deleting a user entry.

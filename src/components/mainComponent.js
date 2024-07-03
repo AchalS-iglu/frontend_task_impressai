@@ -48,12 +48,14 @@ function MainComponent(props) {
             dataIndex: "name",
             key: "name",
             editable: true,
+            width: "39%",
         },
         {
             title: "Email",
             dataIndex: "email",
             key: "email",
             editable: true,
+            width: "39%",
         },
         {
             title: "operation",
@@ -61,12 +63,8 @@ function MainComponent(props) {
             render: (_, record) => {
                 const editable = isEditing(record);
                 return editable ? (
-                    <span>
-                        <Typography.Link
-                            onClick={() => save(record.id)}
-                            style={{
-                                marginRight: 8,
-                            }}>
+                    <span className="table-actions-col">
+                        <Typography.Link onClick={() => save(record.id)}>
                             Save
                         </Typography.Link>
                         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
@@ -74,11 +72,18 @@ function MainComponent(props) {
                         </Popconfirm>
                     </span>
                 ) : (
-                    <Typography.Link
-                        disabled={editingKey !== ""}
-                        onClick={() => edit(record)}>
-                        Edit
-                    </Typography.Link>
+                    <span className="table-actions-col">
+                        <Typography.Link
+                            disabled={editingKey !== ""}
+                            onClick={() => edit(record)}>
+                            Edit
+                        </Typography.Link>
+                        <Popconfirm
+                            title="Sure you want to delete?"
+                            onConfirm={() => deleteUser(record.id)}>
+                            <a>Delete</a>
+                        </Popconfirm>
+                    </span>
                 );
             },
         },
@@ -101,6 +106,7 @@ function MainComponent(props) {
 
     return (
         <div id="main-container-wrapper" className="main-container-wrapper">
+            <h1 className="main-heading">Impress.AI Assignment</h1>
             <InputHandler onSubmit={addUser} />
             <Form form={form} component={false}>
                 <Table
@@ -118,6 +124,7 @@ function MainComponent(props) {
                     pagination={{
                         onChange: cancel,
                     }}
+                    size="middle"
                 />
             </Form>
         </div>
